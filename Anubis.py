@@ -69,7 +69,7 @@ class Signal(QObject):
 # Making text editor as A global variable (to solve the issue of being local to (self) in widget class)
 text = QTextEdit
 text2 = QTextEdit
-
+arguments = QLineEdit
 #
 #
 #
@@ -175,6 +175,16 @@ class Widget(QWidget):
         # I defined a new splitter to seperate between the upper and lower sides of the window
         V_splitter = QSplitter(Qt.Vertical)
         V_splitter.addWidget(H_splitter)
+
+        # Arguments to be passed to the function call
+        labelForArgs = QLabel(self)
+        labelForArgs.setText(
+            "Arguments should be semi-colon separated and in the correct order, ex: 'a';'b'")
+        V_splitter.addWidget(labelForArgs)
+        global arguments
+        arguments = QLineEdit(self)
+        V_splitter.addWidget(arguments)
+
         V_splitter.addWidget(text2)
 
         Final_Layout = QHBoxLayout(self)
@@ -338,13 +348,21 @@ class UI(QMainWindow):
         # text2.append("Working")
         # Get the code from the edit text
         code = text.toPlainText()
+        args = arguments.text().split(';')
+        function_call_start = code.find("def") + 4
+        function_call_end = code.find("(")
+        function_call = code[function_call_start: function_call_end + 1]
+        for arg in args:
+            function_call += arg + ','
+        function_call = function_call[:-1] + ')'
+        # print(function_call)
         try:
             # Redirect console output to IDE console
             original_stdout = sys.stdout
             result = StringIO()
             sys.stdout = result
             # Execute the user code
-            exec(code, globals())
+            exec(code + "\n" + function_call, globals())
             # Show result in IDE console
             text2.append(result.getvalue())
             # Restore original stdout to print in console
