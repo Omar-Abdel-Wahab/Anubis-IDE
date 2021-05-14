@@ -31,6 +31,11 @@ If python3 is the default use this:
 ### Linux
 - python3 Anubis.py
 
+## Run code using fast execution fix
+- After opening the IDE, enter any code snippet of a function without calling it in the end of the program
+- Add any needed arguments in the arguments edit line
+- Go to "My Run" in the Menu bar, and press "Run"
+
 ## Welcome
 
 (![Welcome](https://www4.0zz0.com/2020/07/22/02/133570716.png))
