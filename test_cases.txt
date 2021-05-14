@@ -1,0 +1,63 @@
+print('Hello World')
+
+
+
+
+prin('Hello World')
+
+
+
+
+def hello_world():
+	print('Hello World')
+hello_world()
+
+
+
+
+de hello_world():
+	print('Hello World')
+hello_world()
+
+
+
+
+from math import factorial
+x = factorial(5)
+print(x)
+
+
+
+
+from math import factorial
+def my_factorial(x):
+	result = factorial(x)
+	return result
+r = my_factorial(5)
+print(r)
+
+
+
+
+from math import factorial
+def my_factorial(x):
+	result = factorial(x)
+	return result
+result = my_factorial(5)
+print(result)
+
+
+
+
+fruits = ["apple", "banana", "cherry"]
+for x in fruits:
+  print(x)
+
+
+
+
+def print_fruits():
+	fruits = ["apple", "banana", "cherry"]
+	for x in fruits:
+  		print(x)
+print_fruits()

@@ -1,10 +1,10 @@
 #############      author => Anubis Graduation Team        ############
 #############      this project is part of my graduation project and it intends to make a fully functioned IDE from scratch    ########
 #############      I've borrowed a function (serial_ports()) from a guy in stack overflow whome I can't remember his name, so I gave hime the copyrights of this function, thank you  ########
-
-
+from io import StringIO
 import sys
 import glob
+
 import serial
 
 import Python_Coloring
@@ -260,6 +260,8 @@ class UI(QMainWindow):
         filemenu = menu.addMenu('File')
         Port = menu.addMenu('Port')
         Run = menu.addMenu('Run')
+        # Add new menu item for the fast execution
+        My_Run = menu.addMenu('My Run')
 
         # As any PC or laptop have many ports, so I need to list them to the User
         # so I made (Port_Action) to add the Ports got from (serial_ports()) function
@@ -282,6 +284,11 @@ class UI(QMainWindow):
         RunAction = QAction("Run", self)
         RunAction.triggered.connect(self.Run)
         Run.addAction(RunAction)
+
+        # Add new action in the menu for the fast execution
+        MyRunAction = QAction("Run", self)
+        MyRunAction.triggered.connect(self.new_run)
+        My_Run.addAction(MyRunAction)
 
         # Making and adding File Features
         Save_Action = QAction("Save", self)
@@ -325,6 +332,26 @@ class UI(QMainWindow):
         else:
             text2.append("Please Select Your Port Number First")
 
+    def new_run(self):
+        # Clear IDE console
+        text2.clear()
+        # text2.append("Working")
+        # Get the code from the edit text
+        code = text.toPlainText()
+        try:
+            # Redirect console output to IDE console
+            original_stdout = sys.stdout
+            result = StringIO()
+            sys.stdout = result
+            # Execute the user code
+            exec(code, globals())
+            # Show result in IDE console
+            text2.append(result.getvalue())
+            # Restore original stdout to print in console
+            sys.stdout = original_stdout
+        except Exception as e:
+            # logging.error(traceback.format_exc())
+            text2.append(str(e))
 
     # this function is made to get which port was selected by the user
     @QtCore.pyqtSlot()
